@@ -1,6 +1,7 @@
 import streamlit as st
 import boto3
 import json
+import os
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(page_title="Bible LLM Compare", layout="wide")
@@ -14,7 +15,7 @@ FINETUNED_ENDPOINT = "llama3-8b-bible-finetuned-v2"
 
 @st.cache_resource
 def get_sm_runtime():
-    boto_session = boto3.Session(profile_name="AWoods", region_name="us-east-1")
+    boto_session = boto3.Session(profile_name=os.environ.get("AWS_PROFILE", "default"), region_name="us-east-1")
     return boto_session.client("sagemaker-runtime")
 
 
